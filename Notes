@@ -1,0 +1,32 @@
+== Ingy writes most code in Bash
+== Show complete-shell interactive testing
+== git completion shits the bed
+== Show Zsh and Fish completion
+== env vs set
+== complete-shell CLI usage
+== Mention ZipRecruiter
+== Gmail tab completion
+== Full Demo for cpanm completion
+== Get Everyone to Install complete-shell
+== Ask people to file bugs
+== Write a new Perl compgen
+== Explain the compgen DSL in depth
+== Explain terms like 'compdef' and 'compgen'
+== Explain how Bash completion should work
+== perl -M<tab><tab>
+
+
+
+
+
+== ToDo
+- lwp-request
+- mi6
+- perl
+- perldoc
+- plackup
+- pmtools
+- prove6
+- yath
+- ysh
+

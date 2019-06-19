@@ -1,0 +1,231 @@
+---- config
+title: CompleteShell - Tab Completion for Every Program and Every Shell
+indent: 5
+auto_size: 1
+vim_opts: '-u NONE'
+skip: 0
+vimrc: |
+  unmap AA
+  unmap QQ
+  set nohlsearch
+  au BufRead * syn match vroom_command "\v^\s*\$.*$"
+  hi vroom_command  term=bold,italic,underline ctermfg=Yellow
+
+  map j /^\s\+\$<cr>
+  map ' :set bg=light<cr>
+  map k ?^\s\+\$<cr>
+  map r :exec '!clear;printf "=\%.0s" {1..80};echo;' . substitute(getline('.'), '^\s\+\$\s\+', '', '')<cr>
+  map m r
+  map <ENTER> r
+  map s :e #<cr>
+  map q ;
+  map qq :q!<cr>
+
+  map 1 :wincmd o<cr>
+  map 2 :wincmd v<cr>
+  map \1 :w<cr>
+
+---- center
+CompleteShell - Tab Completion for Every Program and Every Shell
+
+by Ingy döt Net
+
+The Perl Conference 2019
+Pittsburgh PA
+
+June 19, 2019
+
+----
+== What is Tab Completion?
+
+* Context sensitive input help. Just press the TAB key!
+
+* Gmail has Tab Completion now
+
+* Many people use terminal/shell completion for file paths
+
+* Good tab completion gives best info at every point
+* perl -M<TAB>
+
+* All good commandline programs should have completion and man pages!
+
+----
+== How do you make tab completion for your commands?
+
+* Almost nobody writes completions for their CLIs
+  * Almost certainly not for every shell
+  * Unless it's a project with a big community
+  * Perl has almost none
+* It's quite hard to do
+* Harder to do right
+* Different for each shell
+  * Bash
+  * Zsh
+  * Fish
+  * Ksh
+* perl -M<TAB>
+
+----
+== Introducing CompleteShell
+
+* First, on irc.freenode.net: /join #complete-shell
+
++* CompleteShell is a super simple Data-DSL for defining completions
+* Compiles to native completion for every shell
+  * Bash, Zsh, Fish, others
+* complete-shell CLI to manage your completions
+* Easy to write (and publish and index) your own
+* Makes Bash completion on par or better than Zsh/Fish
+
+* CompleteShell aims to make:
+  * Best possible completions
+  * For every command in the world
+  * For every shell feasible
+
+* Why not solve this problem?
+
+----
+== Introducing complete-shell (The CLI)
+
+$ complete-shell
+$ complete-shell --help
+
+$ complete-shell help
+$ man complete-shell
+
+$ complete-shell search cp
+$ complete-shell search @perl
+
+$ complete-shell list
+$ complete-shell install cpanm
+$ complete-shell list
+$ complete-shell install @perl
+$ complete-shell list
+
+----
+== Introducing complete-shell (continued)
+
+$ complete-shell config
+$ complete-shell config single_tab true
+$ complete-shell config
+$ complete-shell config modern_settings true
+$ complete-shell config
+
+----
+== Introducing ZipRecruiter
+
+* I started working at ZipRecruiter last summer
+* Really great place for anyone to work
+  * Including Perl Programmers!
+* HQ is in Santa Monica
+  * Many remotes across US
+* Main codebase is in Perl
+* Many other programming languages
+  * Python, Go, several others
+* Talk to me/us if interested!
+
+----
+== ZipRecruiter and CompleteShell
+
+* ZipRecruiter has hundreds of internal CLI programs
+* None had tab completion or man pages
+* mjd asked for Bash completion for one of his CLIs
+* I decided to make them for every command and every shell
+
+* I created CompleteShell
+* Got it working inside Zip
+* Made it Open Source
+
+* (I also did the manpage thing :)
+
+----
+== Installing complete-shell
+
+This is where everyone here will install and use CompleteShell
+
+* File GitHub issues as we go!
+
+
+Please go to https://github.com/complete-shell/complete-shell
+
+* Click on "Wiki" navigation link
+* Click on "TPCiP Setup"
+
+----
+== How Bash completion works
+
+* complete -F _foo foo
+* _foo sets COMPREPLY array and some compopts
+* Readline does magic (has limited config options)
+
+* complete | less
+* type _longopt | less
+
+* Bash has had a completion framework for a long time
+* On GitHub!
+  * https://github.com/scop/bash-completion
+$ vim /usr/share/bash-completion/
+
+* Completions are autoloaded
+* type _perl; perl <TAB><TAB>; type _perl
+
+----
+== CompleteShell Bash Improvements
+
+* Builds over scop/bash-completion framework
+* Completion descriptions
+* Hints
+  * For errors
+  * For unguessable completions
+    * cs search <TAB>
+* Pager replacement using fzf (oalders++)
+* Fixes for OSX sadness
+
+* Keep the Shell Tidy!
+  * env vs set
+  * set | less
+
+----
+== How CompleteShell Works
+
+* You write foo.comp (and maybe foo.bash) compdef files
+* CompleteShell compiles them into Bash completions
+
+$ vim ~/.complete-shell/src/cpanm/
+$ complete-shell compile --print cpanm | less
+
+* compdefs are DSL that is valid Bash, Zsh and Fish!
+* Compiler is written in Bash
+
+* CompleteShell has an interactive test suite
+
+----
+== Writing our own Completions
+
+* cs add xxx.comp
+
+----
+== Introducing the CompleteShell (compdef) DSL
+
+* https://github.com/complete-shell/complete-cpanm
+$ vim ~/src/complete-shell/repos
+
+----
+== Write, Publish and Share completion for `prove6`
+
+* Hack prove6.comp
+  $ vim ~/src/complete-shell/repos/complete-prove6
+* Test it
+* Push it
+* Index it
+
+----
+== What's Next???
+
+* Join Me!
+* Let's make every command completable!
+* For Perl, CPAN and everything else!
+* Maybe a Completion BOF tonight?!
+
+----
+== The End
